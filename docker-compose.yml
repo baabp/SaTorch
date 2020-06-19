@@ -1,0 +1,19 @@
+version: '2.4'
+services:
+  baabp-st_master:
+    container_name: baabp-st_master
+    build: .
+    image: baabp/st:torch-cuda
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - ./web.env
+#    command: nvidia-smi
+    tty: true
+    command: /bin/bash
+    volumes:
+      - .:/src
+    ports:
+      - "8008:8008"
+      - "6006:6006"
+      - "6007:6007"
