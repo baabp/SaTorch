@@ -1,4 +1,5 @@
 from src.datasets.eurosat import EuroSAT, random_split
+from src.datasets.utils import calc_normalization
 from torchvision import models, transforms
 from torch.utils.data import DataLoader
 
@@ -45,5 +46,15 @@ def main():
     images, labels = next(iter(train_dl))
     print(images.shape, labels.shape)
 
+    # "Calculate the mean and std of each channel on images from `train_dl`"
+    mean, std = calc_normalization(train_dl)
+    print(mean, std)
+    dataset.transform.transforms.append(transforms.Normalize(mean, std))
+
+    dict_param = {}
+    dict_param = {'mean': mean, 'std': std}
+
+    return train_dl, val_dl, dataset, dict_param
+
 if __name__ == '__main__':
-    main()
+    train_dl, val_dl, dataset, dict_param = main()

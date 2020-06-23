@@ -16,7 +16,7 @@ def random_split(dataset, ratio=0.9, random_state=None):
 
     Args:
         dataset (Dataset): Dataset to be split
-        ratio (int): Split rate of training and testing.
+        ratio (float): Split rate of training and testing.
         random_state (int): The desired seed.
 
     Returns:
