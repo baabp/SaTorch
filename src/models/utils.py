@@ -8,20 +8,15 @@ import os
 import numpy as np
 import torch.utils.data
 from .pytorchcv.model_provider import get_model
-# from .metrics.metric import EvalMetric, CompositeEvalMetric
-# from .metrics.cls_metrics import Top1Error, TopKError
-# from .metrics.seg_metrics import PixelAccuracyMetric, MeanIoUMetric
-# from .metrics.det_metrics import CocoDetMApMetric
-# from .metrics.hpe_metrics import CocoHpeOksApMetric
 
-from src.torchsat.torchsat.models.classification.vgg import vgg11, vgg11_bn, vgg13, vgg13_bn, vgg16, vgg16_bn, vgg19_bn, vgg19
-from src.torchsat.torchsat.models.classification.resnet import resnet18, resnet34, resnet50, resnet101, resnet152, resnext50_32x4d, resnext101_32x8d, wide_resnet50_2, wide_resnet101_2
-from src.torchsat.torchsat.models.classification.densenet import densenet121, densenet169, densenet201
-from src.torchsat.torchsat.models.classification.inception import inception_v3
-from src.torchsat.torchsat.models.classification.mobilenet import mobilenet_v2
-from src.torchsat.torchsat.models.classification.efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, efficientnet_b5, efficientnet_b6, efficientnet_b7
-from src.torchsat.torchsat.models.classification.resnest import resnest50, resnest101, resnest200, resnest269
-from src.torchsat.torchsat.models.segmentation.unet import unet34, unet101, unet152
+from src.models.torchsat.classification.vgg import vgg11, vgg11_bn, vgg13, vgg13_bn, vgg16, vgg16_bn, vgg19_bn, vgg19
+from src.models.torchsat.classification.resnet import resnet18, resnet34, resnet50, resnet101, resnet152, resnext50_32x4d, resnext101_32x8d, wide_resnet50_2, wide_resnet101_2
+from src.models.torchsat.classification.densenet import densenet121, densenet169, densenet201
+from src.models.torchsat.classification.inception import inception_v3
+from src.models.torchsat.classification.mobilenet import mobilenet_v2
+from src.models.torchsat.classification.efficientnet import efficientnet_b0, efficientnet_b1, efficientnet_b2, efficientnet_b3, efficientnet_b4, efficientnet_b5, efficientnet_b6, efficientnet_b7
+from src.models.torchsat.classification.resnest import resnest50, resnest101, resnest200, resnest269
+from src.models.torchsat.segmentation.unet import unet34, unet101, unet152
 
 
 models = {

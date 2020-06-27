@@ -30,9 +30,19 @@ optuna
 ax-platform
 botorch
 zope.dottedname
+pytorch-ignite
 
-# Data Generator
--e git+https://github.com/KDD-OpenSource/agots#egg=agots
+# # Data Generator
+# -e git+https://github.com/KDD-OpenSource/agots#egg=agots
+
+# -e git+https://github.com/pytorch/accimage
+
+captum
+tifffile
+
+# cv2 can be source of some troubles..
+opencv-python
+
 
 # Requirements for donut (https://github.com/korepwx/donut)
 # git+https://github.com/thu-ml/zhusuan.git

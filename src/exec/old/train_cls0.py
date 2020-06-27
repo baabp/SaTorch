@@ -16,6 +16,20 @@ import shutil
 
 
 def train_epoch(train_dl, model, loss, optimizer, epoch, device, writer):
+    """
+
+    Args:
+        train_dl (DataLoader): DataLoder of training set
+        model ():
+        loss ():
+        optimizer ():
+        epoch ():
+        device ():
+        writer ():
+
+    Returns:
+
+    """
     model.train()
     train_dl = tqdm(train_dl, "Train", unit="batch")
     for i, (images, labels) in enumerate(train_dl):
@@ -151,7 +165,7 @@ def main(lr=0.0001, wd=0, ratio=0.9, batch_size=32, workers=4, epochs=15):
 
 
     # tensorboard
-    writer = SummaryWriter(log_dir="./logs")
+    writer = SummaryWriter(log_dir="../logs")
     # display some examples in tensorboard
     images, labels = next(iter(train_dl))
     originals = images * std.view(3, 1, 1) + mean.view(3, 1, 1)

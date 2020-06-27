@@ -68,3 +68,14 @@ class ImageFiles(Dataset):
             image = self.transform(image)
         # WARNING -1 indicates no target, it's useful to keep the same interface as torchvision
         return image, -1
+
+def main():
+    datadir = 'data/2750'
+
+    dataset = EuroSAT()
+
+    print('test')
+
+
+if __name__ == "__main__":
+    main()

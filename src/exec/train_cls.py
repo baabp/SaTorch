@@ -1,35 +1,38 @@
 import os
-
-from src.exec.datasets import eurosat
-from src.datasets.eurosat import EuroSAT, random_split
-from src.datasets.utils import calc_normalization
-from torchvision import models, transforms
-from torch.utils.data import DataLoader
+from tqdm import tqdm, trange
+import shutil
+from collections import namedtuple
 
 import torch
-import torchvision
 from torch import nn
+from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
+import torch.optim as optim
 from torchvision import models, transforms
 from torchsummary import summary
 
-from tqdm import tqdm, trange
-import shutil
-
-import torch.optim as optim
-
-from src.models.utils import prepare_model
-
-from zope.dottedname.resolve import resolve
-
 from src.datasets.utils import get_dataset
 from src.models.utils import get_model_torchsat
+from src.datasets.eurosat import EuroSAT, random_split
+from src.datasets.utils import calc_normalization
 
-from src.models.pytorchcv.models.resnet import resnet50
-
-# todo: not finished work 
 
 def train_epoch(train_dl, model, loss, optimizer, epoch, device, writer, show_progress=True):
+    """ Training network in single epoch
+
+    Args:
+        train_dl (DataLoader): DataLoader of training set
+        model (nn.Module): model in PyTorch
+        loss (loss): PyTorch loss
+        optimizer (optimizer): PyTorch optimizer
+        epoch (int): epoch number
+        device (torch.device): torch.device
+        writer (SummaryWriter): instance of SummaryWriter for TensorBoard
+        show_progress (bool): if True, tqdm will be shown
+
+    Returns:
+
+    """
     model.train()
     if show_progress:
         train_dl = tqdm(train_dl, "Train", unit="batch")
@@ -48,9 +51,20 @@ def train_epoch(train_dl, model, loss, optimizer, epoch, device, writer, show_pr
         writer.add_scalar('loss/train', _loss, epoch * len(train_dl) + i)
         writer.add_scalar('acc/train', acc, epoch * len(train_dl) + i)
 
+
 def evaluate_epoch(eval_dl, model, criterion, epoch, writer):
-    # if show_progress:
-    #     eval_dl = tqdm(eval_dl, "Evaluation", unit="batch")
+    """ evaluation in a epoch
+
+    Args:
+        eval_dl (DataLoader): DataLoader of validation set
+        model (nn.Module): model in PyTorch
+        criterion (loss): PyTorch loss
+        epoch (int): epoch number
+        writer (SummaryWriter): instance of SummaryWriter for TensorBoard
+
+    Returns:
+
+    """
     device = next(model.parameters()).device
 
     model.eval()
@@ -76,9 +90,6 @@ def evaluate_epoch(eval_dl, model, criterion, epoch, writer):
 
     return val_acc
 
-
-
-from collections import namedtuple
 
 TestResult = namedtuple('TestResult', 'truth predictions')
 
@@ -132,7 +143,6 @@ def prepare_pt_context(num_gpus,
     return use_cuda, batch_size
 
 
-
 def main(name_dataset='eurosat', lr=0.0001, wd=0, ratio=0.9, batch_size=32, workers=4, epochs=15, num_gpus=1,
          resume=None, dir_weights='./weights'):
     torch.backends.cudnn.benchmark = True
@@ -149,7 +159,9 @@ def main(name_dataset='eurosat', lr=0.0001, wd=0, ratio=0.9, batch_size=32, work
             transforms.ToTensor(),
         ])
     }
-    # name_dataset = 'eurosat'
+    # todo: check
+    #   import torchsat.transforms.transforms_cls as T_cls
+    #   from torchsat.datasets.folder import ImageFolder
     dataset = get_dataset(name=name_dataset, **kwargs)
 
     # Divide to subset
@@ -218,7 +230,6 @@ def main(name_dataset='eurosat', lr=0.0001, wd=0, ratio=0.9, batch_size=32, work
     writer.add_graph(net, images.to(device))
 
     best_acc = 0
-    # todo: from here see src/torchsat/scripts/train_cls.py
     for epoch in trange(epochs, desc="Epochs"):
         writer.add_scalar('train/learning_rate', lr_scheduler.get_lr()[0], epoch)
 
@@ -246,5 +257,4 @@ def main(name_dataset='eurosat', lr=0.0001, wd=0, ratio=0.9, batch_size=32, work
 
 
 if __name__ == '__main__':
-
     main()
